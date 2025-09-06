@@ -87,7 +87,7 @@ def test_queue_dequeue_empty():  # 1p
     with pytest.raises(IndexError):
         queue2.dequeue()
 
-"""
+
 # Priority queue
 def test_erqueue_init():  # 1p
     erqueue = ds.EmergencyRoomQueue()
@@ -132,7 +132,7 @@ def test_erqueue_get_from_empty_queue():  # 1p
     with pytest.raises(IndexError):
         erqueue.get_next_patient()
 
-
+"""
 # Binary search tree
 def test_bst_init():  # 4
     bst1 = ds.BinarySearchTree()

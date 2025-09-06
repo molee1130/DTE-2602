@@ -77,8 +77,9 @@ class Queue:
 
 class EmergencyRoomQueue:
     def __init__(self):
-        """Initialize emergency room queue, use heapdict as property 'queue'"""
-        pass
+        """Initialize emergency room queue, use heapdict as property 'queue'""" 
+        #you mean priority not property? 
+        self.queue = heapdict.heapdict()
 
     def add_patient_with_priority(self, patient_name: str, priority: int) -> None:
         """Add patient name and priority to queue
@@ -87,7 +88,9 @@ class EmergencyRoomQueue:
         patient_name:   String with patient name
         priority:       Integer. Higher priority corresponds to lower-value number.
         """
-        pass
+        # Do not ensure correct priority if patients is assigned
+        # same priority value. 
+        self.queue[patient_name] = priority
 
     def update_patient_priority(self, patient_name: str, new_priority: int) -> None:
         """Update the priority of a patient which is already in the queue
@@ -97,15 +100,26 @@ class EmergencyRoomQueue:
         new_priority:   Integer, updated priority for patient
 
         """
-        pass
+        del self.queue[patient_name]
+        self.queue[patient_name] = new_priority
 
+    def get_next_patient2(self) -> str:
+        """Remove highest-priority patient from queue and return patient name
+
+        # Returns:
+        patient_name    String, name of patient with highest priority
+        """
+        patient_name, _ = self.queue.popitem()
+        return patient_name 
+    
     def get_next_patient(self) -> str:
         """Remove highest-priority patient from queue and return patient name
 
         # Returns:
         patient_name    String, name of patient with highest priority
         """
-        pass
+        
+        return self.queue.popitem()[0]
 
 
 class BinarySearchTree:
