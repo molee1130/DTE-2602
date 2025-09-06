@@ -103,22 +103,13 @@ class EmergencyRoomQueue:
         del self.queue[patient_name]
         self.queue[patient_name] = new_priority
 
-    def get_next_patient2(self) -> str:
-        """Remove highest-priority patient from queue and return patient name
-
-        # Returns:
-        patient_name    String, name of patient with highest priority
-        """
-        patient_name, _ = self.queue.popitem()
-        return patient_name 
-    
     def get_next_patient(self) -> str:
         """Remove highest-priority patient from queue and return patient name
 
         # Returns:
         patient_name    String, name of patient with highest priority
         """
-        
+        #.popitem() returns (key, value)
         return self.queue.popitem()[0]
 
 
@@ -134,9 +125,16 @@ class BinarySearchTree:
         of a binary search tree (see property binarytree.Node.is_bst ). If not, raise
         ValueError.
         """
-        pass
+        if root is None:
+            self.root = None
+        else:
+            if root.is_bst:
+                self.root = root
+            else: 
+                raise ValueError("Tree is not a BST")
+        
 
-    def insert(self, value: float | int) -> None:
+    def insert(self, value: float | int) -> bool:
         """Insert a new node into the tree (binarytree.Node object)
 
         # Inputs:
@@ -147,7 +145,33 @@ class BinarySearchTree:
         See https://docs.python.org/3/library/warnings.html#warnings.warn
         In the case of duplicate values, leave the tree unchanged.
         """
-        pass
+        def place_value_in_tree_helper(root: binarytree.Node, value: float) -> bool: 
+            """Recursive helper function to insert new value in correct position in BST """
+            
+            if root.value == value: #base case 1
+                warnings.warn(f"{value} is alredy in BST")
+                return False
+            
+            if root.value < value:
+                if root.right:
+                    return place_value_in_tree_helper(root.right, value)
+                else: # base case 2
+                    root.right = binarytree.Node(value)
+                    return True 
+            
+            if root.value > value:
+                if root.left:
+                    return place_value_in_tree_helper(root.left, value)
+                else: # base case 3 
+                    root.left = binarytree.Node(value)
+                    return True   
+            
+        if self.root is None: 
+            self.root = binarytree.Node(value)
+            return True 
+        
+        return place_value_in_tree_helper(self.root, value)
+
 
     def __str__(self) -> str | None:
         """Return string representation of tree (helper function for debugging)"""

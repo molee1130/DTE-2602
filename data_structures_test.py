@@ -132,7 +132,7 @@ def test_erqueue_get_from_empty_queue():  # 1p
     with pytest.raises(IndexError):
         erqueue.get_next_patient()
 
-"""
+
 # Binary search tree
 def test_bst_init():  # 4
     bst1 = ds.BinarySearchTree()
@@ -159,4 +159,3 @@ def test_bst_insert():  # 4
     assert bst.root.left.right.left.value == 4
     assert bst.root.right.value == 8
     assert bst.root.right.right.value == 9
-"""
