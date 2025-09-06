@@ -1,6 +1,8 @@
 # Imports
 from __future__ import annotations  # Needed for typing Node class
 
+from ast import Index
+from tkinter import NO
 import warnings
 from typing import Any
 
@@ -21,37 +23,56 @@ class Node:
 class Stack:
     def __init__(self):
         """Initialize stack object, with head attribute"""
-        pass
+        self.head = None 
 
     def push(self, data: Any) -> None:
         """Add new node with data to stack"""
-        pass
+        if self.head is None: 
+            self.head = Node(data)
+        else:
+            self.head = Node(data, self.head)
 
-    def peek(self) -> Node | None:
+    def peek(self) -> Node | None: #type hint should be "Any" not "Node"? 
         """Return data from node on top of stack, without changing stack"""
-        pass
+        if self.head:
+            return self.head.data
+        return None
 
-    def pop(self) -> Node:
+    def pop(self) -> Node: #type hint should be "Any" not "Node"?
         """Remove last added node and return its data"""
-        pass
+        if self.head is None:
+            raise IndexError("Stack is empty")
+        pop_data = self.head.data
+        self.head = self.head.next
+        return pop_data
 
 
 class Queue:
     def __init__(self):
         """Initialize queue object with head and tail"""
-        pass
+        self.head = None  
+        self.tail = None
 
     def enqueue(self, data: Any) -> None:
         """Add node with data to queue"""
-        pass
+        if self.head is None: 
+            self.head = Node(data)
+            self.tail = self.head
+        else:
+            self.tail.next = Node(data) #add new node to linked list
+            self.tail = self.tail.next  #setting new tail 
 
-    def peek(self) -> Node | None:
+    def peek(self) -> Any | None:
         """Return data from head of queue without changing the queue"""
-        pass
+        return self.head.data
 
-    def dequeue(self) -> Node:
+    def dequeue(self) -> Any:
         """Remove node from head of queue and return its data"""
-        pass
+        if self.head is None:
+            raise IndexError("Queue is empty")
+        data = self.head.data
+        self.head = self.head.next
+        return data 
 
 
 class EmergencyRoomQueue:
